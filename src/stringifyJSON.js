@@ -4,7 +4,7 @@
 // but you don't so you're going to write it from scratch:
 var stringifyJSON = function(obj) {
   // your code goes here
-  var stringified = '';
+  
   if( obj instanceof String || typeof obj === 'string'){
   	return "\""+obj+"\"";
   }
@@ -12,8 +12,11 @@ var stringifyJSON = function(obj) {
   	return ""+obj+"";
   }
   else if (Array.isArray(obj)) {
-  	if (!obj.length) return "[]";
-
+  	var stringified = [];
+  	_.each(obj,function(val){
+  		stringified.push(stringifyJSON(val));
+  	});
+  	return "["+stringified+"]";
   }
   else if (typeof obj === 'object'){
   	return ""+obj+"";
