@@ -22,7 +22,10 @@ var stringifyJSON = function(obj) {
   else if (typeof obj === 'object'){
   	var stringified = [];
   	_.each(obj,function(val, key){
-  		stringified.push("\""+key+"\""+':'+stringifyJSON(val));
+  		if (stringifyJSON(val) !== '') {
+  			stringified.push("\""+key+"\""+':'+stringifyJSON(val));
+  		};
+  		
   	});
   	return "{"+stringified+"}";
 
