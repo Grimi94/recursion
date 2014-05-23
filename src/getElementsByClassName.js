@@ -5,33 +5,27 @@
 
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className){
-	var nodes;
-	var regExp = new RegExp("(?:^|\\s)"+className+"(?:\\s|$)");
+	var nodes = this;
 	var result = [];
+	var regExp = new RegExp(className, 'i');
+	
 	if (this.hasOwnProperty('document')) {
 		if (document.body.className.match(className)) {
 			result.push(document.body);
 		}
 		nodes = this.document.body.children;
 	}
-	else{
-		nodes = this.children;
-	}
+
 	_.each(nodes, function(value){
 		if (regExp.test(value.className)) {
-			var temp =  value;
-			result.push(temp);
+			result.push(value);
 		}
-		else if (value.hasOwnProperty('children')) {
-			if (value.children.length > 0){
-				var temp = _.flatten( getElementsByClassName.call(value, className) );
-				
-				if (temp.length) {
-					result.push(temp[0]);
-				}
+		else  {
+			var temp = getElementsByClassName.call(value.children, className);
+			if (temp.length ) {
+				result.push(temp[0]);
 			}
 		}
 	});
-
 	return result;
 };
